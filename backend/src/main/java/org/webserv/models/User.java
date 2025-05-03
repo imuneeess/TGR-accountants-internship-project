@@ -16,17 +16,21 @@ public class User implements UserDetails {
     private String id;
     private String email;
     private String password;
-    private String role; // "ADMIN", "ACCOUNTANT"
+    private UserRole role;
+    private String notificationEmail; // ✅ New field
 
+    // Default constructor
     public User() {}
 
-    public User(String email, String password, String role) {
+    // Constructor for creating a User
+    public User(String email, String password, UserRole role, String notificationEmail) {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.notificationEmail = notificationEmail;
     }
 
-    // Getters & Setters
+    // Getters and setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -36,20 +40,22 @@ public class User implements UserDetails {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public UserRole getRole() { return role; }
+    public void setRole(UserRole role) { this.role = role; }
 
-    // **✅ Fix for `getUsername()` method**
+    public String getNotificationEmail() { return notificationEmail; }
+    public void setNotificationEmail(String notificationEmail) { this.notificationEmail = notificationEmail; }
+
     @Override
     public String getUsername() {
-        return this.email; // Use email as username
+        return this.email;
     }
 
-    // Spring Security methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.role.toUpperCase()));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -68,9 +74,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    void setPass(String pass) {
-        this.password = pass;
     }
 }

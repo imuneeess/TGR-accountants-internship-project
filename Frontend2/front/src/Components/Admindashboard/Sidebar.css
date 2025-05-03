@@ -1,0 +1,137 @@
+body {
+  background: #36367f;
+}
+
+.sidebar {
+  position: absolute;
+  overflow: hidden;
+  top: 20px;
+  left: 20px;
+  bottom: 30px;
+  width: 64px;
+  border-radius: 16px;
+  background: #194f8a;
+  will-change: width;
+  transition: width 0.4s;
+}
+
+.sidebar:hover {
+  width: 260px;
+}
+
+.inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 260px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 72px;
+  padding: 0 20px;
+  background: rgb(0 0 0 / 15%);
+}
+
+.header h1 {
+  margin-left: 12px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 2px;
+  opacity: 0;
+  transition: 0.5s;
+  color: white;
+}
+
+.menu-icon {
+  color: white;
+  font-size: 20px;
+}
+
+.menu {
+  position: relative;
+  display: grid;
+  margin-top: 20px;
+}
+
+.menu::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 56px;
+  width: 6px;
+  background: #6154f7;
+  translate: 0 var(--top);
+  transition: 0.5s;
+}
+
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 56px;
+  width: 100%;
+  padding: 0 22px;
+  background: transparent;
+  border: none;
+  color: rgb(255 255 255 / 60%);
+  cursor: pointer;
+  transition: 0.5s;
+  font-size: 16px;
+}
+
+.menu button:hover span {
+  opacity: 1;
+}
+
+.menu :is(button:hover, .active) {
+  background: rgb(0 0 0 / 35%);
+  color: rgb(255 255 255 / 100%);
+  opacity: 1;
+}
+
+.menu button p,
+.header h1 {
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.sidebar:hover :is(.menu button p, .header h1) {
+  opacity: 1;
+}
+
+.sidebar:hover .menu .active {
+  cursor: default;
+}
+
+.sidebar:hover .menu button:hover:not(.active) {
+  background: rgb(0 0 0 / 8%);
+}
+
+.logout-section {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}
+
+.logout-section button {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  height: 56px;
+  padding: 0 22px;
+  background: transparent;
+  border: none;
+  color: rgb(255 255 255 / 60%);
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.logout-section button:hover {
+  background: rgb(0 0 0 / 35%);
+  color: white;
+}

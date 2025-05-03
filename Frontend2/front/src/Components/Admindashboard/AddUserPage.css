@@ -1,0 +1,114 @@
+/* Container for the page */
+.add-user-container {
+    width: 100%;
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff; /* White background for the card */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Title Styles */
+.add-user-container h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Message Styles */
+.add-user-container p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+.add-user-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.add-user-container label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #555;
+    text-align: left;
+}
+
+.add-user-container input {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.3s ease, box-shadow 0.3s ease; /* Added transition */
+}
+
+.add-user-container input:focus {
+    border: 1px solid #007BFF; /* Blue border on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Soft blue glow */
+}
+
+/* Button Styles */
+.add-user-container button {
+    padding: 12px;
+    background-color: #007BFF; /* Blue color */
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Added transition */
+}
+
+.add-user-container button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight button zoom effect */
+}
+
+/* Success/Error Message Styles */
+.add-user-container .status-message {
+    padding: 15px;
+    background-color: #d4edda; /* Green background for success */
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.add-user-container .error-message {
+    background-color: #f8d7da; /* Red background for error */
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    font-size: 1rem;
+}
+
+/* Password Container Styles */
+.add-user-container .password-container {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .add-user-container {
+        width: 90%;
+    }
+
+    .add-user-container h1 {
+        font-size: 2rem;
+    }
+
+    .add-user-container input,
+    .add-user-container button {
+        font-size: 1rem;
+    }
+}

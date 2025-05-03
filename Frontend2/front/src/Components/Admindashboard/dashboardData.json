@@ -1,0 +1,12 @@
+{
+    "validated": 100,
+    "nonValidated": 50,
+    "accountantsPerRegion": {
+      "Casablanca": 40,
+      "Rabat": 30,
+      "Oujda": 20,
+      "Tanger": 35,
+      "Fes": 24
+    }
+  }
+  

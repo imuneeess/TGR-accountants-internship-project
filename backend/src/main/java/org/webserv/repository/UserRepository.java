@@ -1,11 +1,12 @@
 package org.webserv.repository;
 
-import org.webserv.models.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import org.webserv.models.User;
 
-@Repository
+import java.util.Optional;
+import java.util.List;
+
 public interface UserRepository extends MongoRepository<User, String> {
-    User findByEmail(String email);
-    boolean existsByEmail(String email);
+    Optional<User> findByEmail(String email);
+    List<User> findByRole(String role); // ✅ THIS is what was missing!
 }

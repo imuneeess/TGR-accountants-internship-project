@@ -1,44 +1,34 @@
 package org.webserv.controllers;
 
-import org.webserv.models.AccountingReport;
-import org.webserv.repository.AccountingReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.webserv.models.AccountingDay;
+import org.webserv.services.AccountingDayService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/reports")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/accounting-report")
 public class AccountingReportController {
 
     @Autowired
-    private AccountingReportRepository reportRepository;
+    private AccountingDayService service;
 
-    @GetMapping
-    public List<AccountingReport> getAllReports() {
-        try {
-            List<AccountingReport> reports = reportRepository.findAll();
-            System.out.println("Fetched " + reports.size() + " reports.");
-            return reports;
-        } catch (Exception e) {
-            System.err.println("Error fetching reports: " + e.getMessage());
-            return List.of(); // Return an empty list on failure
-        }
+    @GetMapping("/{email}")
+    public List<AccountingDay> getAllDays(@PathVariable String email) {
+        return service.getOrCreateDaysForUser(email);
     }
 
-    @PostMapping("/submit")
-    public AccountingReport submitReport(@RequestBody AccountingReport report) {
-        try {
-            if (report.getBranchName() == null || report.getSubmittedBy() == null) {
-                throw new IllegalArgumentException("Branch name and submittedBy fields are required.");
-            }
-            AccountingReport savedReport = reportRepository.save(report);
-            System.out.println("Report submitted: " + savedReport);
-            return savedReport;
-        } catch (Exception e) {
-            System.err.println("Error submitting report: " + e.getMessage());
-            return null; // Handle error more effectively in a real application
-        }
+    @PostMapping("/validate")
+    public AccountingDay validateDay(@RequestBody Map<String, String> payload) {
+        String email = payload.get("email");
+        String date = payload.get("date");
+        return service.validateDay(email, date);
+    }
+
+    @GetMapping("/admin/stats")
+    public Map<String, Object> getAdminStats() {
+        return service.getAdminStats();
     }
 }

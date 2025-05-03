@@ -1,0 +1,116 @@
+/* Ensure global background color for body */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #f4f7fc !important; /* Apply the correct background globally */
+}
+
+/* .dashboard-container settings */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: #f4f7fc !important; /* Apply the correct background color */
+  min-height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+
+/* Dashboard Title */
+.dashboard-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* Dashboard Stats layout */
+.dashboard-stats {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: -50px;
+  width: 100%;
+  max-width: 1100px;
+  margin-bottom: 20px;
+}
+
+/* Stat Cards */
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 180px;
+  font-size: 18px;
+  font-weight: bold;
+  transition: transform 0.3s ease-in-out;
+  flex: 1;
+  max-width: 250px;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Color styles for validated and non-validated cards */
+.validated {
+  color: #4CAF50;
+  border-bottom: 4px solid #4CAF50;
+}
+
+.non-validated {
+  color: #E53935;
+  border-bottom: 4px solid #E53935;
+}
+
+/* Charts layout */
+.dashboard-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Responsive design for charts */
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1400px;
+}
+
+/* Chart Cards */
+.chart-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: center;
+}
+
+/* Map Container */
+.map-container {
+  margin-top: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1400px;
+}
+
+/* Map styling */
+.map {
+  height: 500px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Ensuring body background color is set */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #f4f7fc !important; /* Apply the correct background globally */
+}

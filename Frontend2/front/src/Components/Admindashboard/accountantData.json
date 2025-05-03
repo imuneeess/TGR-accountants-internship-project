@@ -1,0 +1,25 @@
+{
+    "total": 500, 
+    "validated": 280, 
+    "nonValidated": 220,
+    "regions": [
+      { "name": "Rabat", "count": 50 },
+      { "name": "Casablanca", "count": 80 },
+      { "name": "Tanger", "count": 60 },
+      { "name": "Fes", "count": 45 },
+      { "name": "Oujda", "count": 30 },
+      { "name": "Foreign Countries", "count": 15 },
+      { "name": "Ministries", "count": 20 }
+    ],
+    "locations": [
+      { "name": "Casablanca", "lat": 33.5731, "lng": -7.5898, "count": 80 },
+      { "name": "Rabat", "lat": 34.0209, "lng": -6.8416, "count": 50 },
+      { "name": "Tanger", "lat": 35.7595, "lng": -5.8339, "count": 60 },
+      { "name": "Fes", "lat": 34.0333, "lng": -5.0000, "count": 45 },
+      { "name": "Oujda", "lat": 34.6867, "lng": -1.9111, "count": 30 },
+      { "name": "Paris (France)", "lat": 48.8566, "lng": 2.3522, "count": 10 },
+      { "name": "Madrid (Spain)", "lat": 40.4168, "lng": -3.7038, "count": 5 },
+      { "name": "Ministry of Finance", "lat": 34.0209, "lng": -6.8416, "count": 8 },
+      { "name": "Ministry of Interior", "lat": 34.0209, "lng": -6.8416, "count": 12 }
+    ]
+  }
