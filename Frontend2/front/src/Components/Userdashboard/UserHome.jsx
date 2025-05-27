@@ -26,11 +26,11 @@ const UserHome = () => {
   const fetchDays = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`http://localhost:8080/api/accounting-report/${email}`, {
+      const response = await axios.get(`http://localhost:8080/api/accounting-report/${email}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("📦 Backend days fetched:", res.data);
-      setDays(res.data || []);
+      console.log("📦 Backend days fetched:", response.data);
+      setDays(response.data || []);
     } catch (error) {
       console.error("❌ Failed to fetch accounting days", error);
       alert("Failed to load data. Check console for details.");
@@ -47,25 +47,38 @@ const UserHome = () => {
   const handleSelectDay = (day) => setSelectedDay(day.date);
 
   const handleValidate = async () => {
-    if (!selectedDay) return alert("Please select a day to validate.");
-
+    if (!selectedDay) {
+      return alert("Please select a day to validate.");
+    }
+  
     try {
-      await axios.post(
-        "http://localhost:8080/api/accounting-report/validate",
-        { email, date: selectedDay },
-        { headers: { Authorization: `Bearer ${token}` } }
+      const response = await axios.post(
+        "http://localhost:8080/api/accounting-days/validate", // ✅ Correct endpoint
+        {},
+        {
+          params: { email, date: selectedDay },
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
-
-      setDays((prev) =>
-        prev.map((d) => (d.date === selectedDay ? { ...d, validated: true } : d))
-      );
-      alert(`✅ ${selectedDay} validated successfully.`);
+  
+      console.log("✅ Validation response:", response.data);
+  
+      if (response.data?.validated) {
+        setDays((prev) =>
+          prev.map((d) => (d.date === selectedDay ? { ...d, validated: true } : d))
+        );
+        alert(`✅ ${selectedDay} validated successfully.`);
+      } else {
+        alert(`⚠️ Failed to validate ${selectedDay}.`);
+      }
+  
       setSelectedDay(null);
     } catch (err) {
-      console.error("Validation error:", err);
-      alert("Error validating day.");
+      console.error("❌ Error validating day:", err);
+      alert("Error validating day. Check console for details.");
     }
   };
+  
 
   return (
     <div style={{ padding: "20px" }}>

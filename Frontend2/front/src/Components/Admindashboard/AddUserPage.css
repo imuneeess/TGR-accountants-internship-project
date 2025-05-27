@@ -1,114 +1,139 @@
-/* Container for the page */
 .add-user-container {
-    width: 100%;
-    max-width: 700px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #ffffff; /* White background for the card */
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 650px;
+    margin: 60px auto;
+    padding: 40px;
+    background: linear-gradient(145deg, #ffffff, #f0f4f9);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
-}
-
-/* Title Styles */
-.add-user-container h1 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* Message Styles */
-.add-user-container p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-/* Form Styles */
-.add-user-container form {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .add-user-container h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #194f8a;
+    margin-bottom: 10px;
+  }
+  
+  .add-user-container > p {
+    font-size: 15px;
+    color: #5e6c84;
+    margin-bottom: 30px;
+  }
+  
+  .add-user-container form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-}
-
-.add-user-container label {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #555;
+    gap: 20px;
     text-align: left;
-}
-
-.add-user-container input {
-    padding: 12px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    outline: none;
-    transition: border 0.3s ease, box-shadow 0.3s ease; /* Added transition */
-}
-
-.add-user-container input:focus {
-    border: 1px solid #007BFF; /* Blue border on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Soft blue glow */
-}
-
-/* Button Styles */
-.add-user-container button {
-    padding: 12px;
-    background-color: #007BFF; /* Blue color */
-    color: white;
-    font-size: 1rem;
+  }
+  
+  .add-user-container label {
     font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+    color: #333;
+  }
+  
+  .add-user-container input,
+  .add-user-container select {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    border: 1px solid #d9e2ec;
+    border-radius: 10px;
+    background: #f9fbfd;
+    transition: all 0.3s ease;
+  }
+  
+  .add-user-container input:focus,
+  .add-user-container select:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+  
+  .add-user-container button {
+    margin-top: 15px;
+    padding: 14px;
+    background-color: #194f8a;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s; /* Added transition */
-}
-
-.add-user-container button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: scale(1.05); /* Slight button zoom effect */
-}
-
-/* Success/Error Message Styles */
-.add-user-container .status-message {
-    padding: 15px;
-    background-color: #d4edda; /* Green background for success */
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    border-radius: 8px;
-    font-size: 1rem;
-    text-align: center;
-}
-
-.add-user-container .error-message {
-    background-color: #f8d7da; /* Red background for error */
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-    padding: 15px;
-    font-size: 1rem;
-}
-
-/* Password Container Styles */
-.add-user-container .password-container {
+    transition: background 0.3s, transform 0.2s ease;
+    box-shadow: 0 6px 18px rgba(25, 79, 138, 0.3);
+  }
+  
+  .add-user-container button:hover {
+    background-color: #163a6d;
+    transform: translateY(-2px);
+  }
+  
+  .status-message,
+  .error-message {
     margin-top: 20px;
-    font-size: 1.2rem;
-    color: #555;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+  
+  .status-message {
+    background-color: #e6f4ea;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+  }
+  
+  .error-message {
+    background-color: #fdeaea;
+    color: #c62828;
+    border: 1px solid #f5c6cb;
+  }
+  
+  .password-container {
+    margin-top: 30px;
+    padding: 18px;
+    background: #f0f6ff;
+    border-left: 4px solid #007bff;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #333;
+    animation: fadeIn 0.4s ease-in-out;
+  }
+  
+  .password-container h3 {
+    margin-bottom: 10px;
+    color: #194f8a;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Responsive layout */
+  @media (max-width: 768px) {
     .add-user-container {
-        width: 90%;
+      padding: 25px;
+      width: 90%;
     }
-
+  
     .add-user-container h1 {
-        font-size: 2rem;
+      font-size: 24px;
     }
-
+  
     .add-user-container input,
-    .add-user-container button {
-        font-size: 1rem;
+    .add-user-container button,
+    .add-user-container select {
+      font-size: 14px;
     }
-}
+  }
+  

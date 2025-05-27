@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/jira")
+//@RestController
+//@RequestMapping("/jira")
 public class JiraTicketController {
 
     @Autowired

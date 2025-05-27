@@ -1,36 +1,29 @@
 package org.webserv.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.webserv.services.JiraService;
-import java.util.Map;
+import org.webserv.models.JiraTicket;
 
-@RestController
-@RequestMapping("/jira")
+//@RestController
+//@RequestMapping("/jira")
 public class JiraController {
 
     @Autowired
     private JiraService jiraService;
 
-    // ✅ Accept both JSON and Query Params
-    @PostMapping("/create")
-    public ResponseEntity<String> createJiraTicket(
-            @RequestParam(required = false) String summary,
-            @RequestParam(required = false) String description,
-            @RequestBody(required = false) Map<String, String> body) {
+    @GetMapping("/issue/{key}")
+    public String getJiraIssue(@PathVariable String key) {
+        return jiraService.fetchIssue(key);
+    }
 
-        // If body is present, extract values
-        if (body != null) {
-            summary = body.getOrDefault("summary", summary);
-            description = body.getOrDefault("description", description);
-        }
+    @PostMapping("/track")
+    public JiraTicket createLocalTicket(@RequestParam String key, @RequestParam String branch) {
+        return jiraService.saveTicket(key, branch);
+    }
 
-        if (summary == null || description == null) {
-            return ResponseEntity.badRequest().body("Error: Missing summary or description");
-        }
-
-        String response = jiraService.createJiraTicket(summary, description);
-        return ResponseEntity.ok(response);
+    @PutMapping("/resolve/{key}")
+    public JiraTicket resolve(@PathVariable String key) {
+        return jiraService.resolveTicket(key);
     }
 }

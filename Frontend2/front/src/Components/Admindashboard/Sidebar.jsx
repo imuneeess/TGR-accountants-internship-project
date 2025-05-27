@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaHome, FaUsers, FaFileAlt, FaUserPlus, FaSignOutAlt, FaBars } from "react-icons/fa";
+import { FaHome, FaUsers, FaFileAlt, FaUserPlus, FaSignOutAlt, FaBars, FaCog } from "react-icons/fa";
 import "./Sidebar.css";
 
-// ✅ Move menuItems outside the component to avoid ESLint warning
+// ✅ Updated menuItems with Admin Settings
 const menuItems = [
   { path: "/dashboard", icon: <FaHome />, label: "Dashboard" },
   { path: "/accountants", icon: <FaUsers />, label: "Accountants List" },
   { path: "/generate-report", icon: <FaFileAlt />, label: "Generate Report" },
   { path: "/add-user", icon: <FaUserPlus />, label: "Add User" },
+  { path: "/settings", icon: <FaCog />, label: "Settings" }, // ✅ New settings entry
 ];
 
 const Sidebar = () => {
@@ -21,7 +22,7 @@ const Sidebar = () => {
       location.pathname.startsWith(item.path)
     );
     if (current !== -1) setActiveIndex(current);
-  }, [location.pathname]); // ✅ no warning now
+  }, [location.pathname]);
 
   const handleNavigate = (index, path) => {
     setActiveIndex(index);

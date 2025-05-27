@@ -1,0 +1,75 @@
+.settings-container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 30px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .settings-form input {
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  .settings-form button {
+    background: #194f8a;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .settings-form button:hover {
+    background: #163d68;
+  }
+  
+  .response-message {
+    font-size: 14px;
+    color: #444;
+  }
+  
+  .password-tip {
+    font-size: 13px;
+    color: #666;
+    margin-top: -8px;
+    margin-bottom: 8px;
+  }
+  
+  .password-wrapper {
+    position: relative;
+  }
+  
+  .password-wrapper input {
+    width: 100%;
+    padding-right: 35px;
+  }
+  
+  .password-wrapper span {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+  }
+  

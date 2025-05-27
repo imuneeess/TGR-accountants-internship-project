@@ -8,7 +8,6 @@ public class AccountingDay {
 
     @Id
     private String id;
-
     private String email;
     private String date;
     private boolean validated;

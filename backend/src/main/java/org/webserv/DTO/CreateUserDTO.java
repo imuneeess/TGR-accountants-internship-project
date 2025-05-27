@@ -1,14 +1,15 @@
 package org.webserv.DTO;
 
-public class CreateAccountantDTO {
+public class CreateUserDTO {
     private String email;
+    private String role; // ADMIN or ACCOUNTANT
     private String notificationEmail;
 
-    // Constructors, getters, and setters
-    public CreateAccountantDTO() {}
+    public CreateUserDTO() {}
 
-    public CreateAccountantDTO(String email, String notificationEmail) {
+    public CreateUserDTO(String email, String role, String notificationEmail) {
         this.email = email;
+        this.role = role;
         this.notificationEmail = notificationEmail;
     }
 
@@ -18,6 +19,14 @@ public class CreateAccountantDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getNotificationEmail() {

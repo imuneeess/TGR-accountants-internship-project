@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import './LoginForm.css';
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -29,15 +29,12 @@ const LoginForm = () => {
 
       const { token, role } = response.data;
 
-      // ✅ Save to localStorage
       localStorage.setItem("userToken", token);
       localStorage.setItem("userRole", role);
-      localStorage.setItem("userEmail", email); // ✅ Now email is stored too
+      localStorage.setItem("userEmail", email);
 
-      // Set default Authorization header
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      // Redirect based on role
       if (role === "ADMIN") {
         navigate("/dashboard");
       } else if (role === "ACCOUNTANT") {
@@ -106,7 +103,7 @@ const LoginForm = () => {
               </div>
               <div className="remember-forgot">
                 <label><input type="checkbox" />Remember me</label>
-                <a href="/forgot-password">Forgot password?</a>
+                <Link to="/forgot-password">Forgot password?</Link>
               </div>
               <button type='submit'>Login</button>
             </form>

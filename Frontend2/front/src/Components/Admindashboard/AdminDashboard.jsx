@@ -1,7 +1,8 @@
+// AdminDashboard.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AdminDashboard.css";
-import { Pie, Bar, Line, Doughnut, Radar } from "react-chartjs-2";
+import { Pie, Line, Radar } from "react-chartjs-2";
 import "chart.js/auto";
 
 const AdminDashboard = () => {
@@ -10,92 +11,98 @@ const AdminDashboard = () => {
     validatedDays: 0,
     nonValidatedDays: 0,
   });
-  const [activeUsers, setActiveUsers] = useState(5);
+
+  const [dailyValidations, setDailyValidations] = useState([]);
 
   const token = localStorage.getItem("userToken");
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/admin/stats", {
+        const [accRes, todayRes] = await Promise.all([
+          axios.get("http://localhost:8080/api/users/accountants", {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          axios.get("http://localhost:8080/api/accounting-days/status/today", {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+        ]);
+
+        const accountants = accRes.data || [];
+        const todayStatus = todayRes.data || [];
+
+        const totalAccountants = accountants.length;
+        const validatedDays = todayStatus.filter((s) => s.validated).length;
+        const nonValidatedDays = totalAccountants - validatedDays;
+
+        setStats({ totalAccountants, validatedDays, nonValidatedDays });
+      } catch (error) {
+        console.error("Error fetching dashboard stats:", error);
+      }
+    };
+
+    const fetchValidationTrend = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/accounting-days", {
           headers: { Authorization: `Bearer ${token}` },
         });
+        const allDays = res.data || [];
 
-        // Set stats in the component
-        const validatedCount = response.data.validatedDays || 0;  // Ensure correct data from backend
-        const nonValidatedCount = response.data.nonValidatedDays || 0;  // Ensure correct data from backend
-        const totalAccountants = response.data.totalAccountants || 0;
-
-        setStats({
-          totalAccountants,
-          validatedDays: validatedCount,
-          nonValidatedDays: nonValidatedCount,
+        const byDate = {};
+        allDays.forEach((d) => {
+          byDate[d.date] = byDate[d.date] || { total: 0, validated: 0 };
+          byDate[d.date].total++;
+          if (d.validated) byDate[d.date].validated++;
         });
-      } catch (error) {
-        console.error("Error fetching stats:", error);
+
+        const dates = Object.keys(byDate).sort().slice(-7);
+        const trend = dates.map((date) => ({
+          date,
+          value: byDate[date].validated,
+        }));
+
+        setDailyValidations(trend);
+      } catch (err) {
+        console.error("Failed to fetch validations by day", err);
       }
     };
 
     fetchStats();
+    fetchValidationTrend();
   }, [token]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveUsers((prev) => prev + Math.floor(Math.random() * 3 - 1));
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const validationData = {
-    labels: ["Validated", "Non-Validated"],
+  const validationPie = {
+    labels: ["Validated", "Not Validated"],
     datasets: [
       {
         data: [stats.validatedDays, stats.nonValidatedDays],
-        backgroundColor: ["#4CAF50", "#E53935"],
+        backgroundColor: ["#4CAF50", "#F44336"],
       },
     ],
   };
 
-  const validationTrendData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  const weeklyTrend = {
+    labels: dailyValidations.map((d) => d.date),
     datasets: [
       {
-        label: "Validations Over Time",
-        data: [5, 15, 20, 30, 40, 50],
-        borderColor: "#4CAF50",
+        label: "Validated Entries (Last 7 Days)",
+        data: dailyValidations.map((d) => d.value),
+        backgroundColor: "#2196F3",
+        borderColor: "#1976D2",
         fill: false,
+        tension: 0.3,
       },
     ],
   };
 
-  const performanceRadar = {
-    labels: ["Speed", "Accuracy", "Submissions", "Workload", "Completion Rate"],
+  const radarStats = {
+    labels: ["Total Accountants", "Validated", "Not Validated"],
     datasets: [
       {
-        label: "Performance Metrics",
-        data: [80, 70, 85, 60, 90],
-        backgroundColor: "rgba(25,118,210,0.6)",
-      },
-    ],
-  };
-
-  const validationGrowthData = {
-    labels: ["2021", "2022", "2023", "2024"],
-    datasets: [
-      {
-        label: "Total Validations",
-        data: [200, 300, 450, 600],
-        backgroundColor: "#FF9800",
-      },
-    ],
-  };
-
-  const activeUsersHeatmap = {
-    labels: ["Morning", "Afternoon", "Evening", "Night"],
-    datasets: [
-      {
-        data: [30, 50, 40, 20],
-        backgroundColor: ["#FFC107", "#03A9F4", "#8BC34A", "#FF5722"],
+        label: "Validation Overview",
+        data: [stats.totalAccountants, stats.validatedDays, stats.nonValidatedDays],
+        backgroundColor: "rgba(33, 150, 243, 0.4)",
+        borderColor: "#2196F3",
       },
     ],
   };
@@ -109,40 +116,32 @@ const AdminDashboard = () => {
           <h3>Total Accountants</h3>
           <p>{stats.totalAccountants}</p>
         </div>
+
         <div className="stat-card validated">
-          <h3>Validated</h3>
+          <h3>Validated Today</h3>
           <p>{stats.validatedDays}</p>
         </div>
+
         <div className="stat-card non-validated">
-          <h3>Non-Validated</h3>
+          <h3>Not Validated Today</h3>
           <p>{stats.nonValidatedDays}</p>
-        </div>
-        <div className="stat-card active-users">
-          <h3>Active Users</h3>
-          <p>{activeUsers}</p>
         </div>
       </div>
 
       <div className="dashboard-charts">
         <div className="chart-card">
           <h3>Validation Status</h3>
-          <Pie data={validationData} />
+          <Pie data={validationPie} />
         </div>
+
         <div className="chart-card">
-          <h3>Validation Trend</h3>
-          <Line data={validationTrendData} />
+          <h3>Last 7 Days Trend</h3>
+          <Line data={weeklyTrend} />
         </div>
+
         <div className="chart-card">
-          <h3>Performance Metrics</h3>
-          <Radar data={performanceRadar} />
-        </div>
-        <div className="chart-card">
-          <h3>Yearly Validation Growth</h3>
-          <Bar data={validationGrowthData} />
-        </div>
-        <div className="chart-card">
-          <h3>Active Users Heatmap</h3>
-          <Doughnut data={activeUsersHeatmap} />
+          <h3>Validation Overview</h3>
+          <Radar data={radarStats} />
         </div>
       </div>
     </div>

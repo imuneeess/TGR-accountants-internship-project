@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaHome, FaFileAlt, FaSignOutAlt, FaBars } from "react-icons/fa";
+import { FaHome, FaFileAlt, FaSignOutAlt, FaBars, FaUserAlt } from "react-icons/fa";
 import "../Admindashboard/Sidebar.css";
 
 // ✅ Sidebar menu items
 const menuItems = [
   { path: "/user/home", icon: <FaHome />, label: "Home" },
   { path: "/user/add-email", icon: <FaFileAlt />, label: "Add Email" },
+  { path: "/user/settings", icon: <FaUserAlt />, label: "Settings" }, // ✅ New
 ];
 
 const UserSidebar = () => {

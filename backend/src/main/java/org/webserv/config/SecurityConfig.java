@@ -31,18 +31,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors() // Enables CORS configuration from CorsConfig
+                .cors()
                 .and()
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // Public endpoints (login/register)
-                        .requestMatchers("/api/test/**").permitAll()  // Allow access to test routes (e.g., manual reminder triggers)
-                        .requestMatchers("/test-email", "/trigger-morning-reminder", "/trigger-evening-reminder").permitAll() // Explicitly allow access to /test-email and reminder triggers
-                        .requestMatchers("/admin/create-accountant").hasRole("ADMIN") // Only Admin can access create-accountant endpoint
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN") // Admin-only routes
-                        .anyRequest().authenticated() // All other requests need authentication
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/test/**").permitAll()
+                        .requestMatchers("/test-email", "/trigger-morning-reminder", "/trigger-evening-reminder").permitAll()
+                        .requestMatchers("/admin/create-accountant").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Ensures stateless sessions (for JWT)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

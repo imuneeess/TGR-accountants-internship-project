@@ -1,86 +1,54 @@
 import React, { useState } from "react";
 import "./GenerateReportPage.css";
-import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import accountantsData from "../../Components/Admindashboard/accountantsData.json";
-import { Pie, Bar } from "react-chartjs-2";
-import "chart.js/auto";
+import axios from "axios";
 
 const GenerateReportPage = () => {
-  const [selectedDate, setSelectedDate] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
 
- 
-  const validationData = {
-    labels: ["Validated", "Not Validated"],
-    datasets: [
-      {
-        data: [
-          accountantsData.filter((acc) => acc.validated).length,
-          accountantsData.filter((acc) => !acc.validated).length,
-        ],
-        backgroundColor: ["#4CAF50", "#E53935"],
-      },
-    ],
-  };
-
-  const accountantsPerRegion = {
-    labels: [...new Set(accountantsData.map((acc) => acc.REGION))], 
-    datasets: [
-      {
-        label: "Number of Accountants",
-        data: accountantsData.reduce((acc, item) => {
-          acc[item.REGION] = (acc[item.REGION] || 0) + 1;
-          return acc;
-        }, {}),
-        backgroundColor: "#1976D2",
-      },
-    ],
-  };
-
-  
-  const generateExcelReport = () => {
-    if (!selectedDate) {
-      alert("Please select a date before generating the report.");
+  const generateExcelReport = async () => {
+    if (!fromDate || !toDate) {
+      alert("Please select both 'from' and 'to' dates.");
       return;
     }
 
-    const ws = XLSX.utils.json_to_sheet(accountantsData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Accountants List");
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/reports/range?from=${fromDate}&to=${toDate}`,
+        {
+          responseType: "blob",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        }
+      );
 
-    
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const file = new Blob([excelBuffer], { type: "application/octet-stream" });
-    saveAs(file, `Report_${selectedDate}.xlsx`);
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      saveAs(blob, `Accounting_Report_${fromDate}_to_${toDate}.xlsx`);
+    } catch (error) {
+      console.error("Failed to generate report:", error);
+      alert("An error occurred while generating the report.");
+    }
   };
 
   return (
     <div className="generate-report-container">
-      <h2 className="title">Generate Report</h2>
+      <h2 className="title">Generate Report by Date Range</h2>
 
       <div className="input-container">
-        <label>Select Date:</label>
-        <input
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-        />
+        <label>From:</label>
+        <input type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
+        <label>To:</label>
+        <input type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} />
       </div>
 
       <button className="generate-btn" onClick={generateExcelReport}>
         Generate Report
       </button>
-
-      <div className="chart-container">
-        <div className="chart-box">
-          <h3>Validation Status</h3>
-          <Pie data={validationData} />
-        </div>
-        <div className="chart-box">
-          <h3>Accountants Per Region</h3>
-          <Bar data={accountantsPerRegion} />
-        </div>
-      </div>
     </div>
   );
 };

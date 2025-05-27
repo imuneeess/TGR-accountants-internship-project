@@ -1,0 +1,53 @@
+.user-settings-container {
+  padding: 40px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.user-settings-container h2 {
+  color: #194f8a;
+  margin-bottom: 20px;
+}
+
+.settings-section {
+  background: #f5f5f5;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 30px;
+}
+
+.settings-section label {
+  display: block;
+  margin: 12px 0 6px;
+  color: #194f8a;
+  font-weight: 600;
+}
+
+.settings-section input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #194f8a;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.settings-section button {
+  margin-top: 20px;
+  background: #194f8a;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.success {
+  color: green;
+  margin-top: 15px;
+}
+
+.error {
+  color: red;
+  margin-top: 15px;
+}
