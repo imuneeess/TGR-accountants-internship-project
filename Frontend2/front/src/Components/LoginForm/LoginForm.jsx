@@ -9,7 +9,7 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import axios from 'axios';
 import logo from '../Assets/image2.png';
 import illu1 from '../Assets/illu1.png';
-import illu2 from '../Assets/illu2.png';
+import illu2 from '../Assets/illu2.png';   
 
 const LoginForm = () => {
   const navigate = useNavigate();
